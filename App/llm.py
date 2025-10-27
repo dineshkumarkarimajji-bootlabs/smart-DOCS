@@ -4,14 +4,15 @@ from langchain_ollama.llms import OllamaLLM
 client = OllamaLLM(model="llama2")
 
 def ask_llm(query: str, context: list[str]) -> str:
+    # Combine only the first few chunks of context
     context_text = "\n\n".join(context[:5])
+
     prompt = f"""
-    You are an AI assistant tasked with **extracting structured information** from documents.  
-    Your goal is to extract **only the relevant information** for each field exactly as specified below, and ignore everything else.  
-    All responses must be **strict JSON only** (no markdown, no extra text).  
-
-    If a field is missing, return "" for strings or [] for lists. 
-
+    You are an AI assistant tasked with extracting information from documents.  
+    Your goal is to answer the question using **only the information in the provided context**.  
+    Do not hallucinate or add any information beyond what is in the context.  
+    Return the answer in **clear sentence format**.  
+    If the context does not contain information to answer a part of the question, say it is unknown.  
 
     Context:
     {context_text}
@@ -19,12 +20,12 @@ def ask_llm(query: str, context: list[str]) -> str:
     Question:
     {query}
 
-    Answer in 5-10 sentences:
+    Answer in sentences:
     """
+
     try:
-        # Use the `generate` method instead of calling the object
+        # Generate response using the client
         response = client.generate([prompt])
-        # The result is a list of Generations
-        return response.generations[0][0].text
+        return response.generations[0][0].text.strip()
     except Exception as e:
         return f"Error: {e}"
