@@ -1,0 +1,133 @@
+Dogs are loyal and friendly animals.
+Cats sleep 70% of their lives.
+Elephants are the largest land animals.
+Lions are called the king of the jungle.
+Cheetahs are the fastest land animals, reaching speeds of up to 70 mph.
+Giraffes have the longest necks of any mammal.
+Blue whales are the largest animals on Earth.
+Polar bears are excellent swimmers and can swim for long distances.
+Kangaroos use their strong legs to hop and their tail for balance.
+Tigers are the largest cat species.
+Pandas primarily eat bamboo.
+Dolphins are highly intelligent marine mammals.
+Bats are the only mammals capable of true flight.
+Owls can rotate their heads up to 270 degrees.
+Penguins are birds that cannot fly but are skilled swimmers.
+Chameleons can change color to blend in with their surroundings.
+Snakes smell using their forked tongues.
+Frogs start their lives as tadpoles in water.
+Honeybees are vital pollinators.
+Ants are incredibly strong and can carry many times their own weight.
+Spiders are arachnids, not insects, and have eight legs.
+Eagles have incredible eyesight and can spot prey from great distances.
+Hummingbirds can fly backward.
+Sharks have multiple rows of teeth that are constantly replaced.
+Octopuses have three hearts.
+Jellyfish don't have brains, hearts, or bones.
+Turtles can live for a very long time.
+Crocodiles have the strongest bite of any animal.
+Hippos spend most of their time in water but are excellent swimmers.
+Zebras have unique stripe patterns.
+Rhinoceroses have thick skin and one or two horns.
+Gorillas are large, powerful primates.
+Orangutans are known for their intelligence and tool use.
+Sloths are very slow-moving animals.
+Squirrels are known for burying nuts.
+Beavers build dams using trees and mud.
+Wolves live in packs and are highly social.
+Foxes are solitary hunters.
+Bears hibernate during the winter months.
+Deer shed their antlers annually.
+Moose are the largest members of the deer family.
+Bison are large herbivores native to North America.
+Camels can survive for long periods without water.
+Fennec foxes have large ears to dissipate heat in the desert.
+Meerkats live in social groups called mobs or gangs.
+Armadillos wear a bony armor shell.
+Platypuses are one of the few venomous mammals.
+Echidnas are spiny mammals that lay eggs.
+Koalas sleep for up to 20 hours a day.
+Wombats produce cube-shaped feces.
+Ostriches are the largest birds and cannot fly.
+Emus are large, flightless birds native to Australia.
+Peacocks are known for their elaborate tail feathers.
+Flamingos get their pink color from their diet of brine shrimp and algae.
+Pelicans have large pouches in their beaks to catch fish.
+Parrots are known for their ability to mimic sounds.
+Woodpeckers peck on trees to find insects and create nests.
+Blue jays are intelligent and can mimic hawks.
+Robins are often seen as a sign of spring.
+Geese fly in a V-shaped formation.
+Ducks have waterproof feathers.
+Swans are known for their graceful appearance.
+Hawks are birds of prey with sharp talons and beaks.
+Vultures are scavengers and help clean up the environment.
+Crows are highly intelligent birds.
+Magpies are known for collecting shiny objects.
+Pigeons have an excellent sense of direction.
+Seagulls are often found near coastal areas.
+Albatrosses have the largest wingspans of any bird.
+Penguins are found in the Southern Hemisphere.
+Puffins are often called "sea parrots."
+Kingfishers dive headfirst into water to catch fish.
+Herons are wading birds with long legs.
+Storks are large birds often associated with delivering babies in folklore.
+Egrets are white wading birds.
+Falcons are the fastest birds in level flight.
+Condors are large vultures found in the Americas.
+Anacondas are one of the largest snakes in the world.
+Pythons are non-venomous constrictor snakes.
+Cobras are venomous snakes known for their hoods.
+Rattlesnakes have a rattle at the end of their tail.
+Gila monsters are venomous lizards found in the southwestern US.
+Komodo dragons are the largest living species of lizard.
+Geckos are lizards known for their ability to climb smooth surfaces.
+Iguanas are large, herbivorous lizards.
+Tadpoles breathe through gills.
+Salamanders can regenerate lost limbs.
+Newts are a type of salamander that lives in water for part of the year.
+Toads have dry, bumpy skin.
+Tree frogs have sticky pads on their toes for climbing.
+Poison dart frogs are brightly colored and toxic.
+Alligators have a U-shaped snout.
+Crocodiles have a V-shaped snout and are more aggressive than alligators.
+Gharials are crocodiles with long, thin snouts, found in India.
+Sea turtles return to the same beaches where they were born to lay eggs.
+Freshwater turtles live in ponds and rivers.
+Box turtles can completely enclose themselves in their shell.
+Snapping turtles have powerful jaws.
+Pufferfish can inflate their bodies when threatened.
+Seahorses are the only fish species where the male carries the eggs.
+Clownfish live in anemones for protection.
+Eels are long, snake-like fish.
+Sharks can detect the electrical fields of their prey.
+Rays are flat-bodied fish related to sharks.
+Starfish are echinoderms, not fish, and have no brain.
+Sea urchins are spiny marine animals.
+Coral reefs are made up of tiny animals called polyps.
+Anemones are predatory marine animals that resemble flowers.
+Crabs walk sideways.
+Lobsters have hard exoskeletons.
+Shrimp are small crustaceans.
+Squid have ten limbs, including eight arms and two tentacles.
+Mussels are bivalve mollusks.
+Oysters can produce pearls.
+Snails move by gliding on a muscular foot.
+Slugs are snails without shells.
+Worms are invertebrates that live in soil or water.
+Leeches are segmented worms that feed on blood.
+Butterflies undergo complete metamorphosis.
+Moths are often nocturnal and have feathery antennae.
+Beetles have hard wing covers.
+Flies have only one pair of wings.
+Mosquitoes feed on blood.
+Dragonflies are fast, aerial predators.
+Grasshoppers jump using their powerful hind legs.
+Crickets are known for their chirping sounds.
+Cockroaches are resilient insects.
+Termites live in colonies and eat wood.
+Ladybugs are considered beneficial insects as they eat aphids.
+Praying mantises are predatory insects with forelegs held in a "prayer" position.
+Scorpions are arachnids with a venomous stinger.
+Centipedes have one pair of legs per body segment.
+Millipedes have two pairs of legs per body segment.
