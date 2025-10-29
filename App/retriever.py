@@ -15,26 +15,38 @@ class Retriever:
         self.chunk_size = chunk_size
         self.persist_dir = persist_dir
 
-        # Initialize Chroma client with persistence
-        self.client = chromadb.Client(chromadb.config.Settings(
-            persist_directory=persist_dir
-        ))
+        # ✅ Ensure persistence directory exists
+        if not os.path.exists(persist_dir):
+            os.makedirs(persist_dir, exist_ok=True)
+            logging.warning(f"Chroma persist directory '{persist_dir}' was missing — created new one.")
 
-        # Use Chroma embedding function wrapper for SentenceTransformers
+        # ✅ Initialize persistent Chroma client (ensures data is stored on disk)
+        self.client = chromadb.PersistentClient(path=persist_dir)
+
+        # ✅ Define embedding function
         self.embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
             model_name=embedding_model_name
         )
 
-        # Load or create the collection
-        if "documents" in [c.name for c in self.client.list_collections()]:
-            self.collection = self.client.get_collection("documents")
-            logging.info("Loaded existing Chroma collection 'documents'.")
-        else:
+        # ✅ Load or create the collection safely
+        try:
+            existing_collections = [c.name for c in self.client.list_collections()]
+            if "documents" in existing_collections:
+                self.collection = self.client.get_collection("documents")
+                logging.info("Loaded existing Chroma collection 'documents'.")
+            else:
+                self.collection = self.client.create_collection(
+                    name="documents",
+                    embedding_function=self.embedding_function
+                )
+                logging.info("Created new Chroma collection 'documents'.")
+        except Exception as e:
+            logging.error(f"Error initializing Chroma collection: {e}")
             self.collection = self.client.create_collection(
                 name="documents",
                 embedding_function=self.embedding_function
             )
-            logging.info("Created new Chroma collection 'documents'.")
+            logging.info("Recreated new Chroma collection due to error.")
 
     def add_document(self, file_path: str):
         """Load document, split into chunks, and index in ChromaDB."""
@@ -47,31 +59,33 @@ class Retriever:
             text = load_txt(file_path)
 
         chunks = chunk_text(text, chunk_size=self.chunk_size)
-
         metadatas = [{"source": os.path.basename(file_path)} for _ in chunks]
         ids = [f"{os.path.basename(file_path)}_{i}" for i in range(len(chunks))]
 
+        # ✅ Add to ChromaDB
         self.collection.add(
             documents=chunks,
             metadatas=metadatas,
             ids=ids
         )
 
-        # # Persist the database immediately
-        # self.client.persist()
-
         elapsed = time.time() - start_time
         logging.info(f"Indexed {len(chunks)} chunks from {file_path} in {elapsed:.2f}s")
+        logging.info(f"ChromaDB persisted successfully at '{self.persist_dir}'")
 
     def query(self, query_text: str, top_k: int = 5, filter_doc: str = None):
         """Query ChromaDB with optional metadata filtering."""
         start_time = time.time()
 
-        results = self.collection.query(
-            query_texts=[query_text],
-            n_results=top_k * 2,
-            include=["documents", "metadatas", "distances"]
-        )
+        try:
+            results = self.collection.query(
+                query_texts=[query_text],
+                n_results=top_k * 2,
+                include=["documents", "metadatas", "distances"]
+            )
+        except Exception as e:
+            logging.error(f"Query failed: {e}")
+            return []
 
         retrieved = []
         for doc, meta, dist in zip(results["documents"][0], results["metadatas"][0], results["distances"][0]):
