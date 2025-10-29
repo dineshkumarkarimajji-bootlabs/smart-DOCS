@@ -20,7 +20,8 @@ dependencies = [
     "accelerate (>=1.11.0,<2.0.0)",
     "huggingface-hub (>=0.36.0,<0.37.0)",
     "ollama (>=0.6.0,<0.7.0)",
-    "langchain-ollama (>=1.0.0,<2.0.0)"
+    "langchain-ollama (>=1.0.0,<2.0.0)",
+    "chromadb (>=1.2.2,<2.0.0)"
 ]
 
 
