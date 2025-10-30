@@ -84,10 +84,15 @@ User Query → Retrieve Relevant Chunks (filtered by user)
 🧱 Tech Stack
 
 Frontend:	React, Axios, Vite
+
 Backend:	FastAPI, Uvicorn
+
 Auth:	JWT, python-jose, passlib
+
 Embeddings:	SentenceTransformer (all-MiniLM-L6-v2)
+
 Database:	ChromaDB
+
 Environment:	Poetry (Python 3.13)
 
 ⚙️ Setup Instructions
@@ -98,12 +103,17 @@ git clone https://github.com/dineshkumarkarimajji-bootlabs/smart-DOCS.git
 cd smart-DOCS
 
 2️⃣ Backend Setup
+
 poetry install
+
 poetry run uvicorn App.main:app --reload
 
 3️⃣ Frontend Setup
+
 cd rag-frontend
+
 npm install
+
 npm run dev
 
 4️⃣ Access the App
@@ -117,16 +127,21 @@ Upload your PDFs/TXT files
 Ask questions securely on your own documents
 
 🧠 Example Usage (Python Script)
+
 from App.retriever import Retriever
 
 retriever = Retriever(embedding_model_name="all-MiniLM-L6-v2", chunk_size=250)
+
 retriever.add_document("data/week1_Lecture.pdf", user="user1")
+
 retriever.add_document("data/animal_facts.txt", user="user1")
 
 results = retriever.query("What is transformer architecture?", top_k=5, user="user1")
+
 metrics = retriever.evaluate("What is transformer architecture?", results)
 
 print("Results:", results)
+
 print("Metrics:", metrics)
 
 
