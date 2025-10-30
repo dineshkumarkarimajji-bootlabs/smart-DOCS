@@ -131,16 +131,5 @@ print("Metrics:", metrics)
 
 Each document and embedding is tagged with its uploader (user), ensuring isolation between users.
 
-📊 Folder Structure
-smart-DOCS/
-├── App/
-│   ├── main.py          # FastAPI entry
-│   ├── retriever.py     # Document processing & vector retrieval
-│   ├── auth.py          # JWT authentication
-│   ├── utils.py         # PDF/TXT loaders & helpers
-│   ├── __init__.py
-├── rag-frontend/        # React frontend (login, upload, query UI)
-├── data/                # Sample PDF/TXT files
-├── chroma_db/           # Vector DB persistence directory
-└── README.md
+
 
