@@ -144,12 +144,3 @@ smart-DOCS/
 ├── chroma_db/           # Vector DB persistence directory
 └── README.md
 
-🧰 Future Enhancements
-
-🌐 Role-based access (e.g., Admin vs Normal User)
-
-☁️ Cloud storage integration (S3 / Firebase)
-
-🧩 LLM selection (Ollama, HuggingFace, OpenAI)
-
-📜 Document history dashboard
