@@ -94,6 +94,7 @@ Environment:	Poetry (Python 3.13)
 
 1️⃣ Clone the Repository
 git clone https://github.com/dineshkumarkarimajji-bootlabs/smart-DOCS.git
+
 cd smart-DOCS
 
 2️⃣ Backend Setup
