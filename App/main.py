@@ -9,7 +9,7 @@ import os, time, logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
-app = FastAPI(title="Smart Document QA")
+app = FastAPI(title="DocuChat — A RAG-based Document Q&A System")
 retriever = Retriever()
 
 app.add_middleware(

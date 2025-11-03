@@ -228,7 +228,7 @@ function App() {
               textShadow: "0 0 10px #00c6ff66",
             }}
           >
-            Smart Document QA
+            DocuChat — A RAG-based Document Q&A System
           </h1>
           <button
             onClick={handleLogout}

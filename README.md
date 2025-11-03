@@ -158,25 +158,3 @@ JWT-based authentication protects all endpoints
 Document retrieval is user-specific
 
 Users cannot access other users’ documents or embeddings
-
-📂 File Structure (Simplified)
-
-smart-DOCS/
-|
-├─ App/
-|  |
-│  ├─ main.py
-|  |
-│  ├─ retriever.py
-|  |
-│  ├─ utils.py
-|  |
-│  ├─ llm.py
-|  |
-│  ├─ auth.py
-|
-├─ chroma_db/        # Persistent embeddings
-|
-├─ data/             # Uploaded documents
-|
-├─ rag-frontend/     # React frontend
