@@ -10,13 +10,11 @@ SECRET_KEY = "super-secret-key"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
-# Use Argon2 instead of bcrypt
 pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
-# -------------------------------
 # Helper functions
-# -------------------------------
+
 def hash_password(password: str) -> str:
     """Hash password safely using Argon2"""
     return pwd_context.hash(password)
@@ -25,17 +23,17 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify password using Argon2"""
     return pwd_context.verify(plain_password, hashed_password)
 
-# -------------------------------
+
 # Fake Users DB (replace with real DB)
-# -------------------------------
+
 fake_users_db = {
     "user1": {"username": "user1", "password": hash_password("password1")},
     "user2": {"username": "user2", "password": hash_password("password2")},
 }
 
-# -------------------------------
+
 # Authentication functions
-# -------------------------------
+
 def authenticate_user(username: str, password: str):
     user = fake_users_db.get(username)
     if not user or not verify_password(password, user["password"]):

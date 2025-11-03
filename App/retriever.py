@@ -1,5 +1,5 @@
 
-import os, time, logging
+import os,  logging
 from sentence_transformers import SentenceTransformer
 from App.utils import chunk_text, load_pdf, load_txt
 import chromadb
@@ -41,8 +41,6 @@ class Retriever:
             metadatas=metadatas,
             ids=ids
         )
-
-
 
         logging.info(f"Indexed {len(chunks)} chunks from {file_path} for user '{user}'")
 

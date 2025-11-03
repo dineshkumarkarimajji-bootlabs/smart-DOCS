@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, Depends, Query, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
+from sklearn import metrics
 from App.retriever import Retriever
 from App.llm import ask_llm
 from App.auth import authenticate_user, create_access_token, get_current_user
@@ -8,7 +9,7 @@ import os, time, logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 
-app = FastAPI(title="Secure Document QA")
+app = FastAPI(title="Smart Document QA")
 retriever = Retriever()
 
 app.add_middleware(
@@ -22,7 +23,7 @@ UPLOAD_DIR = "data"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # --- Auth endpoint ---
-@app.post("/token")
+@app.post("/token", response_model=dict)
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
@@ -54,4 +55,4 @@ async def upload(files: list[UploadFile] = File(...), current_user: dict = Depen
 def query(q: str = Query(...), top_k: int = 5, use_llm: bool = True, current_user: dict = Depends(get_current_user)):
     results = retriever.query(query_text=q, top_k=top_k, user=current_user["username"])
     answer = ask_llm(q, [r["text"] for r in results]) if use_llm else None
-    return {"query": q, "results": results, "answer": answer}
+    return {"query": q, "results": results, "answer": answer, "metrics": retriever.evaluate(q, results)}

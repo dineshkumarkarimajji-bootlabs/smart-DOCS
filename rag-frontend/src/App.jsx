@@ -92,7 +92,7 @@ function App() {
       let parsedAnswer = res.data.answer;
       try {
         parsedAnswer = JSON.parse(res.data.answer);
-      } catch {}
+      } catch { }
 
       setAnswer(parsedAnswer);
       setResults(res.data.results || []);
