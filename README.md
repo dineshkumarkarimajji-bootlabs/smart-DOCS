@@ -1,5 +1,4 @@
-# smart-DOCS
-🧠 Smart-DOCS
+Smart-DOCS 🧠
 
 Secure AI-Powered Document QA System with User-Level Access Control
 
@@ -7,7 +6,7 @@ Secure AI-Powered Document QA System with User-Level Access Control
 
 Smart-DOCS is an intelligent document management and question-answering system that allows multiple users to securely upload, query, and manage their own documents. Each user’s data and embeddings are private and isolated, ensuring full document access control.
 
-It uses FastAPI + ChromaDB for backend processing and a React frontend for an intuitive user interface.
+It leverages FastAPI + ChromaDB for backend processing and a React frontend for an intuitive user interface.
 
 ✅ Key Features
 
@@ -25,67 +24,65 @@ It uses FastAPI + ChromaDB for backend processing and a React frontend for an in
 
 ⚙️ FastAPI + React full-stack integration
 
-Architecture
+🏗️ Architecture
 
-🔷 1. Frontend (React + Axios)
+1. Frontend (React + Axios)
 
-Provides a modern, responsive interface for:
+Modern, responsive interface for:
 
-User Login / Logout
+User login/logout
 
-Document Upload (PDF/TXT)
+Document upload (PDF/TXT)
 
-Question Input and Results Display
+Question input and results display
 
-Sends API requests (with JWT in headers) to backend endpoints for upload and querying.
+Sends API requests (with JWT in headers) to backend endpoints
 
-Displays results, relevant document snippets, and the LLM-generated answer.
+Displays retrieved chunks and LLM-generated answers
 
-🔶 2. Backend (FastAPI)
+2. Backend (FastAPI)
 
 Handles user management, document processing, and retrieval logic.
 
 Main Components:
 
-auth.py – Manages JWT creation, validation, and OAuth2 authentication flow.
+auth.py – JWT creation, validation, and OAuth2 authentication
 
-main.py – Defines FastAPI routes (/login, /upload, /query, /logout).
+main.py – FastAPI routes (/login, /upload, /query, /logout)
 
-retriever.py – Handles document chunking, embedding generation, and vector search.
+retriever.py – Document chunking, embedding generation, vector search
 
-utils.py – Helper functions for PDF/TXT loading and text preprocessing.
+utils.py – PDF/TXT loading and preprocessing
 
-🔸 3. Database (ChromaDB)
+3. Database (ChromaDB)
 
-Each user’s documents are stored as separate collections or namespaced entries with metadata["user"].
+Documents are namespaced per user using metadata["user"]
 
-During query time, only chunks belonging to the requesting user are retrieved.
+Persistent storage under chroma_db/
 
-Persistent storage is under chroma_db/ directory.
+Queries filter by user to ensure isolation
 
-🔹 4. Authentication & Authorization Flow
+4. Authentication & Authorization Flow
 
-[Login Form] → [FastAPI /token] → issues JWT token
+User logs in → /token → JWT issued
 
-→ JWT stored in localStorage
+JWT stored in frontend (e.g., localStorage)
 
-→ All future requests include token in Authorization header
+All requests include token in Authorization header
 
-→ Backend decodes token to identify user → filters document access
+Backend decodes token → identifies user → filters document access
 
-🔸 5. Retrieval Pipeline
+5. Retrieval Pipeline
 
 Upload → Chunk Document → Generate Embeddings → Store in ChromaDB
 
-User Query → Retrieve Relevant Chunks (filtered by user)
-          → Pass Context + Query to LLM (e.g., Ollama/HuggingFace)
-          → Return Structured Answer + Relevant Chunks
+User Query → Retrieve Relevant Chunks (filtered by user) → Pass Context + Query to LLM → Return structured answer + relevant chunks
 
 🧱 Tech Stack
 
 Frontend:	React, Axios, Vite
 
-Backend:	FastAPI, Uvicorn
+Backend: FastAPI, Uvicorn
 
 Auth:	JWT, python-jose, passlib
 
@@ -93,7 +90,7 @@ Embeddings:	SentenceTransformer (all-MiniLM-L6-v2)
 
 Database:	ChromaDB
 
-Environment:	Poetry (Python 3.13)
+Environment	Poetry (Python 3.13)
 
 ⚙️ Setup Instructions
 
@@ -121,23 +118,29 @@ npm run dev
 
 Visit: http://localhost:5173
 
-Login with a user (e.g., from auth.py)
+Login with a user (as defined in auth.py)
 
 Upload your PDFs/TXT files
 
 Ask questions securely on your own documents
 
-🧠 Example Usage (Python Script)
+🧠 Example Usage (Python)
 
 from App.retriever import Retriever
 
 retriever = Retriever(embedding_model_name="all-MiniLM-L6-v2", chunk_size=250)
 
+# Upload documents for user1
+
 retriever.add_document("data/week1_Lecture.pdf", user="user1")
 
 retriever.add_document("data/animal_facts.txt", user="user1")
 
+# Query user-specific documents
+
 results = retriever.query("What is transformer architecture?", top_k=5, user="user1")
+
+# Evaluate retrieval quality
 
 metrics = retriever.evaluate("What is transformer architecture?", results)
 
@@ -146,7 +149,12 @@ print("Results:", results)
 print("Metrics:", metrics)
 
 
-Each document and embedding is tagged with its uploader (user), ensuring isolation between users.
+Each document and embedding is tagged with its uploader (user), ensuring complete isolation between users.
 
+🔐 Security
 
+JWT-based authentication protects all endpoints
 
+Document retrieval is user-specific
+
+Users cannot access other users’ documents or embeddings
