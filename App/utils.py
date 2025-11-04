@@ -1,6 +1,7 @@
 import os
 from typing import List
 from PyPDF2 import PdfReader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 def load_pdf(file_path: str) -> str:
     """Read PDF file and return full text."""
@@ -26,13 +27,19 @@ def chunk_text(text: str, chunk_size: int = 500, overlap: int = 50) -> List[str]
     Returns:
         List of text chunks
     """
-    chunks = []
-    start = 0
-    text_length = len(text)
+    # chunks = []
+    # start = 0
+    # text_length = len(text)
 
-    while start < text_length:
-        end = min(start + chunk_size, text_length)
-        chunk = text[start:end]
-        chunks.append(chunk)
-        start += chunk_size - overlap  # move start forward
+    # while start < text_length:
+    #     end = min(start + chunk_size, text_length)
+    #     chunk = text[start:end]
+    #     chunks.append(chunk)
+    #     start += chunk_size - overlap  # move start forward
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=chunk_size,
+        chunk_overlap=overlap,
+        separators=["\n\n", "\n", " ", ""]
+    )
+    chunks = splitter.split_text(text)
     return chunks
