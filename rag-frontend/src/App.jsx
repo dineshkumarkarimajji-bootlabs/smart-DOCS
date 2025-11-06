@@ -12,13 +12,13 @@ function App() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [answer, setAnswer] = useState(null);
+  const [metrics, setMetrics] = useState(null); // ✅ NEW STATE for metrics
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   // Login
   const handleLogin = async () => {
     if (!username || !password) return alert("Enter username and password!");
-
     try {
       setLoading(true);
       setError("");
@@ -48,6 +48,7 @@ function App() {
     setQuery("");
     setResults([]);
     setAnswer(null);
+    setMetrics(null);
     setError("");
   };
 
@@ -89,13 +90,10 @@ function App() {
         params: { q: query, use_llm: true },
       });
 
-      let parsedAnswer = res.data.answer;
-      try {
-        parsedAnswer = JSON.parse(res.data.answer);
-      } catch { }
-
-      setAnswer(parsedAnswer);
+      setAnswer(res.data.answer);
       setResults(res.data.results || []);
+      setMetrics(res.data.metrics || null); // ✅ store metrics
+
     } catch (err) {
       console.error(err);
       setError("Query failed");
@@ -104,7 +102,7 @@ function App() {
     }
   };
 
-  // Render login if not authenticated
+  // Login Screen
   if (!token) {
     return (
       <div
@@ -175,8 +173,6 @@ function App() {
             fontSize: "0.9rem",
             transition: "0.3s",
           }}
-          onMouseOver={(e) => (e.target.style.backgroundColor = "#009ad6")}
-          onMouseOut={(e) => (e.target.style.backgroundColor = "#00c6ff")}
         >
           {loading ? "Logging in..." : "Login"}
         </button>
@@ -197,14 +193,14 @@ function App() {
     );
   }
 
-  // Render main app if authenticated
+  // Main App Screen
   return (
     <div
       style={{
         fontFamily: "Inter, sans-serif",
         minHeight: "100vh",
         padding: "2rem",
-        backgroundColor: "#000000ff",
+        backgroundColor: "#000",
         color: "#eaeaea",
         display: "flex",
         flexDirection: "column",
@@ -212,6 +208,7 @@ function App() {
       }}
     >
       <div style={{ width: "100%", maxWidth: "950px" }}>
+        {/* Header */}
         <div
           style={{
             display: "flex",
@@ -228,7 +225,7 @@ function App() {
               textShadow: "0 0 10px #00c6ff66",
             }}
           >
-            DocuChat — A RAG-based Document Q&A System
+            DocuChat — RAG Document Q&A System
           </h1>
           <button
             onClick={handleLogout}
@@ -240,10 +237,7 @@ function App() {
               border: "none",
               cursor: "pointer",
               fontSize: "0.9rem",
-              transition: "0.3s",
             }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#d93b3b")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#ff4d4d")}
           >
             Logout
           </button>
@@ -256,7 +250,6 @@ function App() {
             padding: "1rem",
             borderRadius: "8px",
             marginBottom: "1.5rem",
-            boxShadow: "0 0 10px rgba(255,255,255,0.05)",
           }}
         >
           <h3 style={{ marginBottom: "0.6rem" }}>📂 Upload Documents</h3>
@@ -286,11 +279,8 @@ function App() {
               color: "white",
               border: "none",
               cursor: "pointer",
-              transition: "0.3s",
               fontSize: "0.9rem",
             }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#009ad6")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#00c6ff")}
           >
             {loading ? "Uploading..." : "Upload"}
           </button>
@@ -303,9 +293,9 @@ function App() {
             padding: "1rem",
             borderRadius: "8px",
             marginBottom: "1.5rem",
-            boxShadow: "0 0 10px rgba(255,255,255,0.05)",
             display: "flex",
             flexDirection: "column",
+            alignItems: "start",
           }}
         >
           <h3 style={{ marginBottom: "0.6rem" }}>💬 Ask a Question</h3>
@@ -313,7 +303,7 @@ function App() {
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="e.g. Ask a question?"
+            placeholder="e.g. What is transformer architecture?"
             style={{
               width: "90%",
               padding: "8px",
@@ -322,7 +312,6 @@ function App() {
               backgroundColor: "#222",
               color: "white",
               marginBottom: "0.6rem",
-              marginRight: "1rem",
               fontSize: "0.9rem",
             }}
           />
@@ -336,18 +325,14 @@ function App() {
               color: "white",
               border: "none",
               cursor: "pointer",
-              transition: "0.3s",
               fontSize: "0.9rem",
-              width: "80px",
             }}
-            onMouseOver={(e) => (e.target.style.backgroundColor = "#e06a00")}
-            onMouseOut={(e) => (e.target.style.backgroundColor = "#ff7a00")}
           >
             {loading ? "Thinking..." : "Ask"}
           </button>
         </section>
 
-        {/* Error Message */}
+        {/* Error */}
         {error && (
           <p
             style={{
@@ -362,7 +347,7 @@ function App() {
           </p>
         )}
 
-        {/* Answer Display */}
+        {/* Answer Section */}
         {answer && (
           <section
             style={{
@@ -380,23 +365,27 @@ function App() {
                 background: "#0f0f0f",
                 padding: "0.8rem",
                 borderRadius: "6px",
-                overflowX: "auto",
               }}
             >
-              {typeof answer === "object" ? (
-                <pre
-                  style={{
-                    fontSize: "0.9rem",
-                    whiteSpace: "pre-wrap",
-                    color: "#eaeaea",
-                  }}
-                >
-                  {JSON.stringify(answer, null, 2)}
-                </pre>
-              ) : (
-                <p style={{ lineHeight: "1.6" }}>{answer}</p>
-              )}
+              <p style={{ lineHeight: "1.6" }}>{answer}</p>
             </div>
+          </section>
+        )}
+
+        {/* ✅ Metrics Display */}
+        {metrics && (
+          <section
+            style={{
+              background: "#1a1a1a",
+              padding: "1rem",
+              borderRadius: "8px",
+              marginBottom: "1.5rem",
+              border: "1px solid #333",
+            }}
+          >
+            <h3 style={{ color: "#ffcc00" }}>📊 RAG Evaluation Metrics</h3>
+            <p><strong>Average Similarity:</strong> {metrics.avg_similarity.toFixed(4)}</p>
+            <p><strong>Hallucination Rate:</strong> {metrics.hallucination_rate.toFixed(4)}</p>
           </section>
         )}
 

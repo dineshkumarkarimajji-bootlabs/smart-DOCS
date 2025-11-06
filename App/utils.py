@@ -16,7 +16,6 @@ def load_txt(file_path: str) -> str:
     """Read TXT file and return full text."""
     with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
-
 def chunk_text(text: str, chunk_size: int = 500, overlap: int = 50) -> List[str]:
     """
     Split text into overlapping chunks.
