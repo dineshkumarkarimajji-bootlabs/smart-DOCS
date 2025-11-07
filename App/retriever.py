@@ -9,25 +9,37 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 
 class Retriever:
     def __init__(self, embedding_model_name="all-MiniLM-L6-v2", chunk_size=300, persist_dir="chroma_db"):
+
         self.model = SentenceTransformer(embedding_model_name)
         self.chunk_size = chunk_size
         self.persist_dir = persist_dir
 
-        if not os.path.exists(persist_dir):
-            os.makedirs(persist_dir, exist_ok=True)
+        os.makedirs(persist_dir, exist_ok=True)
 
+        #  Chroma persistent client
         self.client = chromadb.PersistentClient(path=persist_dir)
-        self.embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(model_name=embedding_model_name)
 
+        # One source of truth for embeddings (let Chroma embed)
+        self.embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
+            model_name=embedding_model_name
+        )
+        
+        #  Idempotent get-or-create collection
         try:
-            existing_collections = [c.name for c in self.client.list_collections()]
-            if "documents" in existing_collections:
+            if any(c.name == "documents" for c in self.client.list_collections()):
                 self.collection = self.client.get_collection("documents")
             else:
-                self.collection = self.client.create_collection(name="documents", embedding_function=self.embedding_function)
+                self.collection = self.client.create_collection(
+                    name="documents",
+                    embedding_function=self.embedding_function
+                )
         except Exception as e:
             logging.error(f"Error initializing collection: {e}")
-            self.collection = self.client.create_collection(name="documents", embedding_function=self.embedding_function)
+            # Retry with create as a safe fallback
+            self.collection = self.client.create_collection(
+                name="documents",
+                embedding_function=self.embedding_function
+            )
 
     def add_document(self, file_path: str, user: str):
         text = load_pdf(file_path) if file_path.endswith(".pdf") else load_txt(file_path)
