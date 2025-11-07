@@ -35,7 +35,7 @@ class Retriever:
                 )
         except Exception as e:
             logging.error(f"Error initializing collection: {e}")
-            # Retry with create as a safe fallback
+            # create as a safe fallback
             self.collection = self.client.create_collection(
                 name="documents",
                 embedding_function=self.embedding_function
